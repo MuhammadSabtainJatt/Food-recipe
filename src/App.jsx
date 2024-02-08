@@ -1,92 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle';
 import './App.scss';
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { CardActionArea, Button } from '@mui/material';
+import Routes from './Routes'
 
-function MealSearch() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [meals, setMeals] = useState([]);
-  const [error, setError] = useState(null);
-
-  const handleInputChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleSearch = async () => {
-    try {
-      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch meals');
-      }
-      const data = await response.json();
-      setMeals(data.meals || []);
-      setError(null);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  const toggleInstructions = (index) => {
-    const newMeals = [...meals];
-    newMeals[index].showInstructions = !newMeals[index].showInstructions;
-    setMeals(newMeals);
-  };
+function App() {
 
   return (
-    <main className="bg-dark">
-      <div className="container">
-        <div className="row">
-          <div className="col text-center">
-            <h1 className="my-5 text-warning">Search For Recipe</h1>
-            <div className="input-group mb-3 w-75 my-5 mx-auto">
-              <input type="text" className="form-control p-2 shadow w-50" placeholder="Search Recipe" aria-label="Recipient's username" aria-describedby="basic-addon2" onChange={handleInputChange} />
-              <div className="input-group-append">
-                <button className="btn btn-warning p-2 shadow" onClick={handleSearch} type="button"><SearchRoundedIcon /></button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row mx-auto">
-          {meals.map((meal, index) => (
-            <div key={index} className="col-md-4 mb-4 align-content-center" >
-              <Card sx={{ maxWidth: 345 }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="240"
-                    image={meal.strMealThumb}
-                    alt={meal.strMeal}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {meal.strMeal}
-                    </Typography>
-                    {meal.showInstructions ? (
-                      <Typography variant="body2" color="text.secondary">
-                        {meal.strInstructions}
-                        <Button onClick={() => toggleInstructions(index)} size="small">Read Less</Button>
-                      </Typography>
-                    ) : (
-                      <Typography variant="body2" color="text.secondary">
-                        {meal.strInstructions.substring(0, 100)}... 
-                        <Button onClick={() => toggleInstructions(index)} size="small">Read More</Button>
-                      </Typography>
-                    )}
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </div>
-          ))}
-        </div>
-        {error && <p className="text-danger">{error}</p>}
-      </div>
-    </main>
+    <Routes />
   );
 }
 
-export default MealSearch;
+export default App;
