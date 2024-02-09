@@ -8,9 +8,7 @@ import { CardActionArea, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 function MealSearch() {
-
-
-    const navigate=useNavigate()
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [meals, setMeals] = useState([]);
   const [error, setError] = useState(null);
@@ -18,10 +16,11 @@ function MealSearch() {
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
   };
-
+  
   const handleSearch = async () => {
     try {
-      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`);
+      const url = searchTerm ? `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}` : 'https://www.themealdb.com/api/json/v1/1/search.php?s=a';
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error('Failed to fetch meals');
       }
@@ -31,7 +30,6 @@ function MealSearch() {
     } catch (error) {
       setError(error.message);
     }
-    console.log(meals)
   };
 
   const toggleInstructions = (index) => {
@@ -39,6 +37,11 @@ function MealSearch() {
     newMeals[index].showInstructions = !newMeals[index].showInstructions;
     setMeals(newMeals);
   };
+
+  // Fetch initial data when component mounts
+  useEffect(() => {
+    handleSearch();
+  }, []);
 
   return (
     <main className="bg-dark">
