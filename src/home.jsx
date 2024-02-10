@@ -59,8 +59,8 @@ function MealSearch() {
         </div>
         <div className="row justify-content-center">
           {meals.map((meal, index) => (
-            <div key={index} className="col-md-4 mb-4" >
-              <Card sx={{ maxWidth: 345 }} onClick={() => navigate(`/detail/:${meal.idMeal}`)}>
+            <div key={index} className="col-md-4 mb-4 d-flex justify-content-center ">
+              <Card sx={{ width: 345 }} onClick={() => navigate(`/detail/:${meal.idMeal}`)}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
