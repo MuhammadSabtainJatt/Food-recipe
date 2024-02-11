@@ -1,6 +1,7 @@
 import { Image, Button } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Loader from './Loader';
 
 export default function Detail() {
   const { id } = useParams();
@@ -50,11 +51,7 @@ export default function Detail() {
           </div>
         </div>
       ) : (
-        <div className="container py-5">
-          <div className="text-center">
-            <p>Loading meal data...</p>
-          </div>
-        </div>
+        <Loader />
       )}
     </div>
   );
