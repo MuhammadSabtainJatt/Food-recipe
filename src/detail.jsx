@@ -1,6 +1,6 @@
-import { Image, Button } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Image, Button } from 'antd';
 import Loader from './Loader';
 
 export default function Detail() {
@@ -16,7 +16,7 @@ export default function Detail() {
     try {
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id.slice(1)}`);
       const data = await response.json();
-      setMealData(data.meals[0]);
+      setMealData(data.meals ? data.meals[0] : null);
     } catch (error) {
       console.error('Error fetching meal data:', error);
     }
@@ -44,8 +44,8 @@ export default function Detail() {
               <p style={{ fontSize: '1.2rem' }}>
                 {showAllInstructions ? mealData.strInstructions : mealData.strInstructions.slice(0, 100) + '...'}
               </p>
-              {!showAllInstructions && (
-                <p type="primary" onClick={toggleInstructions}>Read More</p>
+              {mealData.strInstructions.length > 100 && !showAllInstructions && (
+                <Button type="primary" onClick={toggleInstructions}>Read More</Button>
               )}
             </div>
           </div>

@@ -15,8 +15,12 @@ export default function Loader() {
     };
 
     return (
-        <div className="mosaic-loader">
-            {renderCells()}
+        <>
+        <div className="body">
+            <div className="mosaic-loader">
+                {renderCells()}
+            </div>
         </div>
+        </>
     );
 }
