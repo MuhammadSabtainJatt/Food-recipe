@@ -62,11 +62,15 @@ function MealSearch() {
             </div>
           </div>
         </div>
-        {loading ? ( // Render Loader component if loading state is true
-          <Loader />
-        ) : (
-          <div className="row justify-content-center">
-            {meals.map((meal, index) => (
+        <div className="row justify-content-center">
+          {loading ? ( // Render Loader component if loading state is true
+            <div className="col-md-12 text-center">
+              <div className="loader-container">
+                <Loader />
+              </div>
+            </div>
+          ) : (
+            meals.map((meal, index) => (
               <div key={index} className="col-md-4 mb-4 d-flex justify-content-center ">
                 <Card sx={{ width: 345 }} onClick={() => navigate(`/detail/${meal.idMeal}`)}> {/* Fix the route template string */}
                   <CardActionArea>
@@ -95,9 +99,9 @@ function MealSearch() {
                   </CardActionArea>
                 </Card>
               </div>
-            ))}
-          </div>
-        )}
+            ))
+          )}
+        </div>
       </div>
     </main>
   );

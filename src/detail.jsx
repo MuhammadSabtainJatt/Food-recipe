@@ -14,7 +14,7 @@ export default function Detail() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id.slice(1)}`);
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
       const data = await response.json();
       setMealData(data.meals ? data.meals[0] : null);
     } catch (error) {
@@ -41,12 +41,14 @@ export default function Detail() {
             </div>
             <div className="col-md-6 text-center text-md-left">
               <h1 style={{ fontSize: '2.5rem' }}>{mealData.strMeal}</h1>
-              <p style={{ fontSize: '1.2rem' }}>
+              <p style={{ fontSize: '1.2rem', color: 'white' }}>
                 {showAllInstructions ? mealData.strInstructions : mealData.strInstructions.slice(0, 100) + '...'}
+                {mealData.strInstructions.length > 100 && (
+                  <span className="text-primary " style={{cursor:'pointer'}} onClick={toggleInstructions}>
+                    {showAllInstructions ? 'Show Less' : 'Read More'}
+                  </span>
+                )}
               </p>
-              {mealData.strInstructions.length > 100 && !showAllInstructions && (
-                <Button type="primary" onClick={toggleInstructions}>Read More</Button>
-              )}
             </div>
           </div>
         </div>
